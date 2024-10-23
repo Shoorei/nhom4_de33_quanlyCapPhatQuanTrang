@@ -37,8 +37,8 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        EMAIL = new javax.swing.JTextField();
-        PASSWORD = new javax.swing.JPasswordField();
+        txtEmail = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -59,11 +59,11 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setText("PASSWORD");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 340, -1, -1));
 
-        EMAIL.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        getContentPane().add(EMAIL, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 300, 365, -1));
+        txtEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 300, 365, -1));
 
-        PASSWORD.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        getContentPane().add(PASSWORD, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 380, 365, -1));
+        txtPassword.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 380, 365, -1));
 
         jButton1.setBackground(new java.awt.Color(235, 235, 235));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -104,8 +104,8 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String email = EMAIL.getText();
-        String password = PASSWORD.getText();
+        String email = txtEmail.getText();
+        String password = txtPassword.getText();
         
         int temp = 0;
         try{
@@ -164,13 +164,13 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField EMAIL;
-    private javax.swing.JPasswordField PASSWORD;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }
