@@ -47,6 +47,10 @@ public class DonVi {
         this.soLuongQuanNhan = this.danhSachQuanNhan.size();
     }
 
+    public void setSoLuongQuanNhan(int soLuongQuanNhan) {
+    this.soLuongQuanNhan = soLuongQuanNhan;
+}
+    
     @Override
     public String toString() {
         return tenDonVi + " (Ma so: " + maSo + ") - So luong quan nhan: " + soLuongQuanNhan;

@@ -1,4 +1,11 @@
 
+
+
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package group.nhom4_de33_quanlycapphatquantrang;
 import dao.ConnectionProvider;
 import java.sql.Connection;
 import javax.swing.table.DefaultTableModel;
@@ -6,12 +13,6 @@ import javax.swing.JOptionPane;
 import java.sql.*;
 import javax.swing.table.TableModel;
 import java.awt.Color;
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
 /**
  *
  * @author admin

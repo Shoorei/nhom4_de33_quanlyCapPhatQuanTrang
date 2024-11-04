@@ -1,3 +1,4 @@
+package group.nhom4_de33_quanlycapphatquantrang;
 import javax.swing.JOptionPane;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -8,6 +9,7 @@ import javax.swing.JOptionPane;
  *
  * @author admin
  */
+
 public class Home extends javax.swing.JFrame {
 
     /**
