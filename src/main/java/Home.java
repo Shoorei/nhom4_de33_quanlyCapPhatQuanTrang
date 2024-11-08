@@ -36,15 +36,14 @@ public class Home extends javax.swing.JFrame {
 
         btnUSER = new javax.swing.JButton();
         CATEGORY = new javax.swing.JButton();
-        UNIFORM = new javax.swing.JButton();
-        PERSONNEL = new javax.swing.JButton();
+        btnUniform = new javax.swing.JButton();
+        btnOfficer = new javax.swing.JButton();
         DISTRIBUTION = new javax.swing.JButton();
         LOGOUT = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        ViewDistribution = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnUSER.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -55,7 +54,7 @@ public class Home extends javax.swing.JFrame {
                 btnUSERActionPerformed(evt);
             }
         });
-        getContentPane().add(btnUSER, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 54, -1, -1));
+        getContentPane().add(btnUSER, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
 
         CATEGORY.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         CATEGORY.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/category.png"))); // NOI18N
@@ -65,22 +64,27 @@ public class Home extends javax.swing.JFrame {
                 CATEGORYActionPerformed(evt);
             }
         });
-        getContentPane().add(CATEGORY, new org.netbeans.lib.awtextra.AbsoluteConstraints(237, 54, -1, -1));
+        getContentPane().add(CATEGORY, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, -1, -1));
 
-        UNIFORM.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        UNIFORM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/uniform .png"))); // NOI18N
-        UNIFORM.setText("Uniform");
-        getContentPane().add(UNIFORM, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 54, -1, -1));
-
-        PERSONNEL.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        PERSONNEL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/personnel.png"))); // NOI18N
-        PERSONNEL.setText("Personnel");
-        PERSONNEL.addActionListener(new java.awt.event.ActionListener() {
+        btnUniform.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnUniform.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/uniform .png"))); // NOI18N
+        btnUniform.setText("Uniform");
+        btnUniform.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PERSONNELActionPerformed(evt);
+                btnUniformActionPerformed(evt);
             }
         });
-        getContentPane().add(PERSONNEL, new org.netbeans.lib.awtextra.AbsoluteConstraints(538, 54, -1, -1));
+        getContentPane().add(btnUniform, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, -1, -1));
+
+        btnOfficer.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnOfficer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/personnel.png"))); // NOI18N
+        btnOfficer.setText("OFFICERS");
+        btnOfficer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOfficerActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnOfficer, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 30, -1, -1));
 
         DISTRIBUTION.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         DISTRIBUTION.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Distribution.png"))); // NOI18N
@@ -90,7 +94,7 @@ public class Home extends javax.swing.JFrame {
                 DISTRIBUTIONActionPerformed(evt);
             }
         });
-        getContentPane().add(DISTRIBUTION, new org.netbeans.lib.awtextra.AbsoluteConstraints(696, 54, -1, -1));
+        getContentPane().add(DISTRIBUTION, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 30, -1, -1));
 
         LOGOUT.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         LOGOUT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Exit.png"))); // NOI18N
@@ -100,34 +104,38 @@ public class Home extends javax.swing.JFrame {
                 LOGOUTActionPerformed(evt);
             }
         });
-        getContentPane().add(LOGOUT, new org.netbeans.lib.awtextra.AbsoluteConstraints(1083, 54, -1, -1));
+        getContentPane().add(LOGOUT, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 30, -1, -1));
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/View-Distribution.png"))); // NOI18N
-        jButton1.setText("View Distribution ");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(869, 54, -1, -1));
+        ViewDistribution.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ViewDistribution.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/View-Distribution.png"))); // NOI18N
+        ViewDistribution.setText("View Distribution ");
+        getContentPane().add(ViewDistribution, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 30, 200, -1));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home_background.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void CATEGORYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CATEGORYActionPerformed
         // TODO add your handling code here:
+        new ManageCategory().setVisible(true);
     }//GEN-LAST:event_CATEGORYActionPerformed
 
-    private void PERSONNELActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PERSONNELActionPerformed
+    private void btnOfficerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOfficerActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_PERSONNELActionPerformed
+        new ManageOfficer().setVisible(true);
+    }//GEN-LAST:event_btnOfficerActionPerformed
 
     private void DISTRIBUTIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DISTRIBUTIONActionPerformed
         // TODO add your handling code here:
+        new ManageDistribution().setVisible(true);
     }//GEN-LAST:event_DISTRIBUTIONActionPerformed
 
     private void btnUSERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUSERActionPerformed
         // TODO add your handling code here:
+        new ManageUser().setVisible(true);  
     }//GEN-LAST:event_btnUSERActionPerformed
 
     private void LOGOUTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOGOUTActionPerformed
@@ -138,6 +146,11 @@ public class Home extends javax.swing.JFrame {
             new Login().setVisible(true);
         }
     }//GEN-LAST:event_LOGOUTActionPerformed
+
+    private void btnUniformActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUniformActionPerformed
+        // TODO add your handling code here:
+        new ManageUniform().setVisible(true);
+    }//GEN-LAST:event_btnUniformActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,6 +181,7 @@ public class Home extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Home().setVisible(true);
             }
@@ -178,10 +192,10 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton CATEGORY;
     private javax.swing.JButton DISTRIBUTION;
     private javax.swing.JButton LOGOUT;
-    private javax.swing.JButton PERSONNEL;
-    private javax.swing.JButton UNIFORM;
+    private javax.swing.JButton ViewDistribution;
+    private javax.swing.JButton btnOfficer;
     private javax.swing.JButton btnUSER;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnUniform;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

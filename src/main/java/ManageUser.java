@@ -169,14 +169,29 @@ public class ManageUser extends javax.swing.JFrame {
 
         btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(593, 561, -1, -1));
 
         btnReset.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(678, 561, -1, -1));
 
         btnClose.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnClose.setText("Close");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(756, 561, -1, -1));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/All_page_Background.png"))); // NOI18N
@@ -281,6 +296,49 @@ public class ManageUser extends javax.swing.JFrame {
         btnSave.setEnabled(false);
         btnUpdate.setEnabled(true);
     }//GEN-LAST:event_tableUSERMouseClicked
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        String name = txtName.getText();
+        String phoneNumber = txtPhoneNumber.getText();
+        String email = txtEmail.getText();
+        String address = txtAddress.getText();
+//        String password = txtPassword.getText();
+        String status = (String) comboBoxStatus.getSelectedItem();
+
+        if (validateFields("edit")) {
+            JOptionPane.showMessageDialog(null, "All field are required");
+        } else {
+            try {
+                Connection con = ConnectionProvider.getCon();
+                PreparedStatement ps = con.prepareStatement("update appuser set name=?, phoneNumber=?, email=?, address=?, status=? where appuser_pk=?");
+                ps.setString(1, name);
+                ps.setString(2, phoneNumber);
+                ps.setString(3, email);
+                ps.setString(4, address);
+//                ps.setString(5, password);
+                ps.setString(5, status);
+                ps.setInt(6, appuserPk);
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "User updated successfully!");
+                setVisible(false);
+                new ManageUser().setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+        new ManageUser().setVisible(true);
+    }//GEN-LAST:event_btnResetActionPerformed
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+    }//GEN-LAST:event_btnCloseActionPerformed
 
     /**
      * @param args the command line arguments
