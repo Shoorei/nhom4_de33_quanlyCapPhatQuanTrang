@@ -109,6 +109,11 @@ public class Home extends javax.swing.JFrame {
         ViewDistribution.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         ViewDistribution.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/View-Distribution.png"))); // NOI18N
         ViewDistribution.setText("View Distribution ");
+        ViewDistribution.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ViewDistributionActionPerformed(evt);
+            }
+        });
         getContentPane().add(ViewDistribution, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 30, 200, -1));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -151,6 +156,11 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         new ManageUniform().setVisible(true);
     }//GEN-LAST:event_btnUniformActionPerformed
+
+    private void ViewDistributionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewDistributionActionPerformed
+        // TODO add your handling code here:
+        new ViewDistribution().setVisible(true);
+    }//GEN-LAST:event_ViewDistributionActionPerformed
 
     /**
      * @param args the command line arguments

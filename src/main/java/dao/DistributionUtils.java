@@ -9,5 +9,5 @@ package dao;
  * @author admin
  */
 public class DistributionUtils {
-    
+    public static String detailPath = "E:\\";
 }

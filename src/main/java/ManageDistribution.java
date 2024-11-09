@@ -2,8 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import common.OpenPdf;
+import static common.OpenPdf.OpenById;
 import dao.ConnectionProvider;
+import dao.DistributionUtils;
+import java.io.FileOutputStream;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
@@ -150,7 +159,7 @@ public class ManageDistribution extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Uniform ID", "Name", "Quantity", "Pricce", "Description", "Sub Total"
+                "Uniform ID", "Name", "Quantity", "Price", "Description", "Sub Total"
             }
         ));
         tableDistributionList.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -357,7 +366,7 @@ public class ManageDistribution extends javax.swing.JFrame {
                     try {
                         Connection con = ConnectionProvider.getCon();
                         Statement st = con.createStatement();
-                        ResultSet rs = st.executeQuery("update uniform set quantity=quantity-" + Integer.parseInt(dtm.getValueAt(i, 2).toString()) + "where uniform_pk=" + Integer.parseInt(dtm.getValueAt(i, 0).toString()));
+                        st.executeUpdate("update uniform set quantity=quantity-" + Integer.parseInt(dtm.getValueAt(i, 2).toString()) + " where uniform_pk=" + Integer.parseInt(dtm.getValueAt(i, 0).toString()));
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, e);
                     }
@@ -374,19 +383,69 @@ public class ManageDistribution extends javax.swing.JFrame {
                 ps.setString(3, myFormat.format(cal.getTime()));
                 ps.setInt(4, finalTotalPrice);
                 ps.executeUpdate();
-                
+
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
-            
+
             //Creating document
             com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
-            try{
-                PdfWriter.getInstance(doc, new FileOutputStream(file));
-            }
-            catch(Exception e){
+            try {
+                SimpleDateFormat myFormat = new SimpleDateFormat("dd-MM-yyyy");
+                Calendar cal = Calendar.getInstance();
+                PdfWriter.getInstance(doc, new FileOutputStream(DistributionUtils.detailPath + "" + distributionId + ".pdf"));
+                doc.open();
+                Paragraph projectName = new Paragraph("                                                  Military Uniforms Management System\n");
+                doc.add(projectName);
+                Paragraph starLine = new Paragraph(" ****************************************************************************************************************");
+                doc.add(starLine);
+                Paragraph details = new Paragraph("\tDistribution ID: " + distributionId + "\nDate: " + myFormat.format(cal.getTime()) + "\nTotal: " + finalTotalPrice);
+                doc.add(details);
+                doc.add(starLine);
+                PdfPTable tb1 = new PdfPTable(5);
+                PdfPCell nameCell = new PdfPCell(new Phrase("Name"));
+                PdfPCell descriptionCell = new PdfPCell(new Phrase("Description"));
+                PdfPCell priceCell = new PdfPCell(new Phrase("Price Per Unit"));
+                PdfPCell quantityCell = new PdfPCell(new Phrase("Quantity"));
+                PdfPCell subTotalPriceCell = new PdfPCell(new Phrase("Sub Total Price"));
+
+                BaseColor backgroundColor = new BaseColor(255, 204, 51);
+                nameCell.setBackgroundColor(backgroundColor);
+                descriptionCell.setBackgroundColor(backgroundColor);
+                priceCell.setBackgroundColor(backgroundColor);
+                quantityCell.setBackgroundColor(backgroundColor);
+                subTotalPriceCell.setBackgroundColor(backgroundColor);
+
+                tb1.addCell(nameCell);
+                tb1.addCell(descriptionCell);
+                tb1.addCell(priceCell);
+                tb1.addCell(quantityCell);
+                tb1.addCell(subTotalPriceCell);
+                
+                for (int i=0; i<tableDistributionList.getRowCount(); i++) {
+                    tb1.addCell(tableDistributionList.getValueAt(i, 1).toString());
+                    tb1.addCell(tableDistributionList.getValueAt(i, 4).toString());
+                    tb1.addCell(tableDistributionList.getValueAt(i, 3).toString());
+                    tb1.addCell(tableDistributionList.getValueAt(i, 2).toString());
+                    tb1.addCell(tableDistributionList.getValueAt(i, 5).toString());
+                }
+                
+                doc.add(tb1);
+                doc.add(starLine);
+                
+                OpenPdf.OpenById(distributionId);
+                
+                
+
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
+            doc.close();
+            setVisible(false);
+            new ManageDistribution().setVisible(true);
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Please add some uniform to distribution list and select officer.");
         }
     }//GEN-LAST:event_btnSaveDistributionDetailsActionPerformed
 
