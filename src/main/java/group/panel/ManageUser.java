@@ -5,7 +5,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package group.nhom4_de33_quanlycapphatquantrang;
+package group.panel;
 import dao.ConnectionProvider;
 import java.sql.Connection;
 import javax.swing.table.DefaultTableModel;

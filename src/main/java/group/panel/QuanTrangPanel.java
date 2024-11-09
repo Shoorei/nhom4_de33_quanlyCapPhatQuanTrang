@@ -2,67 +2,45 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package group.nhom4_de33_quanlycapphatquantrang;
+package group.panel;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 /**
  *
  * @author LENOVO LEGION
  */
-public class MainFrame extends javax.swing.JFrame {
-    private JButton btnManageDonVi;
-    private JButton btnManageQuanTrang;
-    private JButton btnManageQuanNhan;
+public class QuanTrangPanel extends javax.swing.JFrame {
+    private JTextField txtLoaiQuanTrang;
+    private JTextField txtMaQuanTrang;
+    private JButton btnAdd;
+    private JButton btnUpdate;
+    private JButton btnDelete;
 
     /**
-     * Creates new form MainFrame
+     * Creates new form QuanTrangPanel
      */
-    public MainFrame() {
-        setTitle("Quản Lý Cấp Phát Quân Trang");
-        setSize(500, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public QuanTrangPanel() {
+        setTitle("Quản Lý Quân Trang");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        
-        // Tạo các nút cho các chức năng quản lý
-        btnManageDonVi = new JButton("Quản Lý Đơn Vị");
-        btnManageQuanTrang = new JButton("Quản Lý Quân Trang");
-        btnManageQuanNhan = new JButton("Quản Lý Quân Nhân");
 
-        // Sắp xếp nút vào panel
-        JPanel panel = new JPanel(new GridLayout(3, 1, 10, 10));
-        panel.add(btnManageDonVi);
-        panel.add(btnManageQuanTrang);
-        panel.add(btnManageQuanNhan);
+        txtLoaiQuanTrang = new JTextField(20);
+        txtMaQuanTrang = new JTextField(20);
+        btnAdd = new JButton("Thêm");
+        btnUpdate = new JButton("Sửa");
+        btnDelete = new JButton("Xóa");
 
-        // Thêm panel vào giữa frame
+        JPanel panel = new JPanel(new GridLayout(4, 2, 10, 10));
+        panel.add(new JLabel("Loại Quân Trang:"));
+        panel.add(txtLoaiQuanTrang);
+        panel.add(new JLabel("Mã Quân Trang:"));
+        panel.add(txtMaQuanTrang);
+        panel.add(btnAdd);
+        panel.add(btnUpdate);
+        panel.add(btnDelete);
+
         add(panel, BorderLayout.CENTER);
-
-        // ActionListener cho từng nút để mở frame tương ứng
-        btnManageDonVi.addActionListener(e -> {
-            JFrame donViFrame = new JFrame("Quản Lý Đơn Vị");
-            donViFrame.add(new DonViPanel());
-            donViFrame.setSize(600, 400);
-            donViFrame.setLocationRelativeTo(null);
-            donViFrame.setVisible(true);
-        });
-
-        btnManageQuanTrang.addActionListener(e -> {
-            JFrame quanTrangFrame = new JFrame("Quản Lý Quân Trang");
-            quanTrangFrame.add(new QuanTrangPanel());
-            quanTrangFrame.setSize(600, 400);
-            quanTrangFrame.setLocationRelativeTo(null);
-            quanTrangFrame.setVisible(true);
-        });
-
-        btnManageQuanNhan.addActionListener(e -> {
-            JFrame quanNhanFrame = new JFrame("Quản Lý Quân Nhân");
-            quanNhanFrame.add(new QuanNhanPanel());
-            quanNhanFrame.setSize(600, 400);
-            quanNhanFrame.setLocationRelativeTo(null);
-            quanNhanFrame.setVisible(true);
-        });
 
         setVisible(true);
         initComponents();
@@ -110,20 +88,20 @@ public class MainFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuanTrangPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuanTrangPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuanTrangPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuanTrangPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainFrame().setVisible(true);
+                new QuanTrangPanel().setVisible(true);
             }
         });
     }

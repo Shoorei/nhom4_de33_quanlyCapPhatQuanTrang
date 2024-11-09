@@ -1,4 +1,4 @@
-package group.nhom4_de33_quanlycapphatquantrang;
+package group.panel;
 import dao.ConnectionProvider;
 import java.sql.Connection;
 import java.sql.ResultSet;

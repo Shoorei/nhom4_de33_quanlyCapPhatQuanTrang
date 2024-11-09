@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import group.nhom4_de33_quanlycapphatquantrang.QuanNhan;
+import group.entity.QuanNhan;
 
 public class QuanNhanDAO {
     public void addQuanNhan(QuanNhan quanNhan) throws SQLException {

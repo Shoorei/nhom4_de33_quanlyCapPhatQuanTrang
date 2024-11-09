@@ -2,53 +2,48 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package group.nhom4_de33_quanlycapphatquantrang;
+package group.panel;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 /**
  *
  * @author LENOVO LEGION
  */
-public class QuanNhanPanel extends javax.swing.JFrame {
-    private JTextField txtHoTen;
+public class DonViPanel extends javax.swing.JFrame {
+    private JTextField txtTenDonVi;
     private JTextField txtMaSo;
-    private JTextField txtDonVi;
-    private JTextField txtCapBac;
     private JButton btnAdd;
     private JButton btnUpdate;
     private JButton btnDelete;
-
     /**
-     * Creates new form QuanNhanPanel
+     * Creates new form DonViPanel
      */
-    public QuanNhanPanel() {
-        setTitle("Quản Lý Quân Nhân");
-        setSize(400, 400);
+    public DonViPanel() {
+               setTitle("Quản Lý Đơn Vị");
+        setSize(400, 300);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        txtHoTen = new JTextField(20);
+        txtTenDonVi = new JTextField(20);
         txtMaSo = new JTextField(20);
-        txtDonVi = new JTextField(20);
-        txtCapBac = new JTextField(20);
         btnAdd = new JButton("Thêm");
         btnUpdate = new JButton("Sửa");
         btnDelete = new JButton("Xóa");
 
-        JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
-        panel.add(new JLabel("Họ Tên:"));
-        panel.add(txtHoTen);
+        JPanel panel = new JPanel(new GridLayout(4, 2, 10, 10));
+        panel.add(new JLabel("Tên Đơn Vị:"));
+        panel.add(txtTenDonVi);
         panel.add(new JLabel("Mã Số:"));
         panel.add(txtMaSo);
-        panel.add(new JLabel("Đơn Vị:"));
-        panel.add(txtDonVi);
-        panel.add(new JLabel("Cấp Bậc:"));
-        panel.add(txtCapBac);
         panel.add(btnAdd);
         panel.add(btnUpdate);
         panel.add(btnDelete);
 
         add(panel, BorderLayout.CENTER);
+
+        // Add event listeners for button actions here
 
         setVisible(true);
         initComponents();
@@ -96,20 +91,20 @@ public class QuanNhanPanel extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QuanNhanPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DonViPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QuanNhanPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DonViPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QuanNhanPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DonViPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QuanNhanPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DonViPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new QuanNhanPanel().setVisible(true);
+                new DonViPanel().setVisible(true);
             }
         });
     }

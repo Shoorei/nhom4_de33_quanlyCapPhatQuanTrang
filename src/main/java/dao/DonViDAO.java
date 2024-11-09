@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import group.nhom4_de33_quanlycapphatquantrang.DonVi;
+import group.entity.DonVi;
 
 public class DonViDAO {
     public void addDonVi(DonVi donVi) throws SQLException {

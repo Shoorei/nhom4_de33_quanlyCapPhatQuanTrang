@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package group.nhom4_de33_quanlycapphatquantrang;
+package group.app;
 
 /**
  *
@@ -13,6 +13,17 @@ import dao.QuanNhanDAO;
 import dao.DonViDAO;
 import java.sql.SQLException;
 import java.util.List;
+import group.entity.CapPhat;
+import group.entity.DonVi;
+import group.entity.QuanNhan;
+import group.entity.QuanTrang;
+import group.panel.DonViPanel;
+import group.panel.Home;
+import group.panel.Login;
+import group.panel.MainFrame;
+import group.panel.ManageUser;
+import group.panel.QuanNhanPanel;
+import group.panel.QuanTrangPanel;
 
 public class App {
     public static void main(String[] args) {

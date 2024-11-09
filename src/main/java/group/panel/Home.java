@@ -1,4 +1,4 @@
-package group.nhom4_de33_quanlycapphatquantrang;
+package group.panel;
 import javax.swing.JOptionPane;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
