@@ -20,6 +20,7 @@ public class QuanNhanPanel extends javax.swing.JFrame {
     private JButton btnAdd;
     private JButton btnUpdate;
     private JButton btnDelete;
+    private JButton btnIssueUniform;
     private JComboBox<String> rankDropdown;
     private JCalendar calendar;
     private JTable table;
@@ -33,7 +34,7 @@ public class QuanNhanPanel extends javax.swing.JFrame {
         setSize(1200, 800);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-
+        
         // Initialize components
         txtHoTen = new JTextField(20);
         txtMaSo = new JTextField(20);
@@ -70,7 +71,12 @@ public class QuanNhanPanel extends javax.swing.JFrame {
         btnAdd = new JButton("Thêm");
         btnUpdate = new JButton("Sửa");
         btnDelete = new JButton("Xóa");
+        btnIssueUniform = new JButton("Cấp Quân Trang");
 
+        
+        btnIssueUniform.addActionListener(e -> openCapPhatQuanTrangPanel());
+
+        
         // Layout for form fields
         JPanel formPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -114,6 +120,8 @@ public class QuanNhanPanel extends javax.swing.JFrame {
         buttonPanel.add(btnAdd);
         buttonPanel.add(btnUpdate);
         buttonPanel.add(btnDelete);
+        buttonPanel.add(btnIssueUniform);
+        buttonPanel.add(btnIssueUniform);
 
         // Main panel for layout
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
@@ -129,6 +137,18 @@ public class QuanNhanPanel extends javax.swing.JFrame {
         btnUpdate.addActionListener(e -> updateRowInTable());
         btnDelete.addActionListener(e -> deleteRowFromTable());
     }
+    private void openCapPhatQuanTrangPanel() {
+    int selectedRow = table.getSelectedRow();
+    if (selectedRow != -1) {
+        String hoTen = (String) table.getValueAt(selectedRow, 0);
+        String maSo = (String) table.getValueAt(selectedRow, 1);
+        
+        // Open the CapPhatQuanTrangPanel and pass selected soldier info
+        new CapPhatPanel(hoTen, maSo).setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một quân nhân để cấp quân trang.");
+    }
+}
 
     // Method to add a new row to the table
     private void addRowToTable() {

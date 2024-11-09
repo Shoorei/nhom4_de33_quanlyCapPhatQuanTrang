@@ -82,10 +82,10 @@ public class DonViPanel extends javax.swing.JFrame {
         setVisible(true);
 
         // Khởi tạo sự kiện cho các nút
-        initComponents();
+        initCustomComponents();
     }
 
-    private void initComponents() {
+    private void initCustomComponents() {
         // Sự kiện thêm thông tin vào bảng
         btnAdd.addActionListener(new ActionListener() {
             @Override
