@@ -28,50 +28,50 @@ public class QuanNhanPanel extends javax.swing.JFrame {
     /**
      * Creates new form QuanNhanPanel
      */
-     public QuanNhanPanel() {
+    public QuanNhanPanel() {
         setTitle("Quản Lý Quân Nhân");
         setSize(1200, 800);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Khởi tạo các thành phần
+        // Initialize components
         txtHoTen = new JTextField(20);
         txtMaSo = new JTextField(20);
         txtDonVi = new JTextField(20);
-                
-        // Khởi tạo JCalendar và định dạng ngày sinh
+        
+        // Initialize JCalendar and date format for Ngày Sinh
         calendar = new JCalendar();
-        calendar.setPreferredSize(new Dimension(300, 200)); // Điều chỉnh kích thước lịch
-        calendar.setWeekOfYearVisible(false); // Ẩn số tuần nếu không cần
+        calendar.setPreferredSize(new Dimension(300, 200));
+        calendar.setWeekOfYearVisible(false);
         txtNgaySinh = new JTextField(20);
-        txtNgaySinh.setEditable(false); // Chỉ đọc
+        txtNgaySinh.setEditable(false);
 
-        // Lắng nghe sự kiện thay đổi ngày để hiển thị theo định dạng dd/MM/yyyy
+        // Calendar date change listener
         calendar.addPropertyChangeListener("calendar", evt -> {
             Date selectedDate = calendar.getDate();
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             String formattedDate = dateFormat.format(selectedDate);
             txtNgaySinh.setText(formattedDate);
         });
-        
-        
-        rankDropdown = new JComboBox<>(new String[] {
+
+        // Rank Dropdown (Cấp Bậc)
+        rankDropdown = new JComboBox<>(new String[]{
                 "Binh Nhì", "Binh Nhất", "Hạ Sĩ", "Trung Sĩ", "Thượng Sĩ", "Thiếu Úy", "Trung Úy", "Đại Úy"
         });
 
-        // Khởi tạo bảng
-        table = new JTable(new DefaultTableModel(new Object[] {
+        // Table for displaying data
+        table = new JTable(new DefaultTableModel(new Object[]{
                 "Họ Tên", "Mã Số", "Đơn Vị", "Cấp Bậc", "Ngày Sinh"
         }, 0));
         JScrollPane tableScrollPane = new JScrollPane(table);
-        tableScrollPane.setPreferredSize(new Dimension(800, 200)); // Điều chỉnh kích thước bảng
+        tableScrollPane.setPreferredSize(new Dimension(800, 200));
 
-        // Khởi tạo các nút
+        // Buttons
         btnAdd = new JButton("Thêm");
         btnUpdate = new JButton("Sửa");
         btnDelete = new JButton("Xóa");
 
-        // Bố trí các thành phần bằng GridBagLayout
+        // Layout for form fields
         JPanel formPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -96,28 +96,26 @@ public class QuanNhanPanel extends javax.swing.JFrame {
         formPanel.add(txtDonVi, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 3;
         formPanel.add(new JLabel("Cấp Bậc:"), gbc);
         gbc.gridx = 1;
         formPanel.add(rankDropdown, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         formPanel.add(new JLabel("Ngày Sinh:"), gbc);
         gbc.gridx = 1;
         formPanel.add(calendar, gbc);
-
         gbc.gridx = 2;
-        gbc.gridy = 3;
         formPanel.add(txtNgaySinh, gbc);
 
-        // Panel chứa các nút
+        // Button panel
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(btnAdd);
         buttonPanel.add(btnUpdate);
         buttonPanel.add(btnDelete);
 
-        // Panel chính để chứa tất cả thành phần
+        // Main panel for layout
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
         mainPanel.add(formPanel, BorderLayout.NORTH);
         mainPanel.add(tableScrollPane, BorderLayout.CENTER);
@@ -125,6 +123,70 @@ public class QuanNhanPanel extends javax.swing.JFrame {
 
         add(mainPanel);
         setVisible(true);
+
+        // Add action listeners for buttons
+        btnAdd.addActionListener(e -> addRowToTable());
+        btnUpdate.addActionListener(e -> updateRowInTable());
+        btnDelete.addActionListener(e -> deleteRowFromTable());
+    }
+
+    // Method to add a new row to the table
+    private void addRowToTable() {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        String hoTen = txtHoTen.getText();
+        String maSo = txtMaSo.getText();
+        String donVi = txtDonVi.getText();
+        String capBac = (String) rankDropdown.getSelectedItem();
+        String ngaySinh = txtNgaySinh.getText();
+
+        // Add row to table
+        model.addRow(new Object[]{hoTen, maSo, donVi, capBac, ngaySinh});
+
+        // Clear the input fields
+        txtHoTen.setText("");
+        txtMaSo.setText("");
+        txtDonVi.setText("");
+        txtNgaySinh.setText("");
+        rankDropdown.setSelectedIndex(0);
+    }
+
+    // Method to update a selected row in the table
+    private void updateRowInTable() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            String hoTen = txtHoTen.getText();
+            String maSo = txtMaSo.getText();
+            String donVi = txtDonVi.getText();
+            String capBac = (String) rankDropdown.getSelectedItem();
+            String ngaySinh = txtNgaySinh.getText();
+
+            model.setValueAt(hoTen, selectedRow, 0);
+            model.setValueAt(maSo, selectedRow, 1);
+            model.setValueAt(donVi, selectedRow, 2);
+            model.setValueAt(capBac, selectedRow, 3);
+            model.setValueAt(ngaySinh, selectedRow, 4);
+
+            // Clear the input fields
+            txtHoTen.setText("");
+            txtMaSo.setText("");
+            txtDonVi.setText("");
+            txtNgaySinh.setText("");
+            rankDropdown.setSelectedIndex(0);
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để sửa.");
+        }
+    }
+
+    // Method to delete a selected row from the table
+    private void deleteRowFromTable() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.removeRow(selectedRow);
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để xóa.");
+        }
     }
 
     /**

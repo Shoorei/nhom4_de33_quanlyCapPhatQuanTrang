@@ -5,6 +5,7 @@
 package group.panel;
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author LENOVO LEGION
@@ -15,37 +16,121 @@ public class QuanTrangPanel extends javax.swing.JFrame {
     private JButton btnAdd;
     private JButton btnUpdate;
     private JButton btnDelete;
-
+    private JTable table;
+    private DefaultTableModel tableModel;
     /**
      * Creates new form QuanTrangPanel
      */
     public QuanTrangPanel() {
         setTitle("Quản Lý Quân Trang");
-        setSize(400, 300);
+        setSize(1200, 800);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        // Initialize components
         txtLoaiQuanTrang = new JTextField(20);
         txtMaQuanTrang = new JTextField(20);
         btnAdd = new JButton("Thêm");
         btnUpdate = new JButton("Sửa");
         btnDelete = new JButton("Xóa");
 
-        JPanel panel = new JPanel(new GridLayout(4, 2, 10, 10));
-        panel.add(new JLabel("Loại Quân Trang:"));
-        panel.add(txtLoaiQuanTrang);
-        panel.add(new JLabel("Mã Quân Trang:"));
-        panel.add(txtMaQuanTrang);
-        panel.add(btnAdd);
-        panel.add(btnUpdate);
-        panel.add(btnDelete);
+        // Create table with default model
+        tableModel = new DefaultTableModel(new Object[] {
+                "Loại Quân Trang", "Mã Quân Trang"
+        }, 0);
+        table = new JTable(tableModel);
+        JScrollPane tableScrollPane = new JScrollPane(table);
+        tableScrollPane.setPreferredSize(new Dimension(800, 200)); // Adjust size of the table
 
-        add(panel, BorderLayout.CENTER);
+        // Layout for form panel (fields + buttons)
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(new JLabel("Loại Quân Trang:"), gbc);
+        gbc.gridx = 1;
+        panel.add(txtLoaiQuanTrang, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(new JLabel("Mã Quân Trang:"), gbc);
+        gbc.gridx = 1;
+        panel.add(txtMaQuanTrang, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(btnAdd, gbc);
+        gbc.gridx = 1;
+        panel.add(btnUpdate, gbc);
+        gbc.gridx = 2;
+        panel.add(btnDelete, gbc);
+
+        // Main panel layout (form + table)
+        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
+        mainPanel.add(panel, BorderLayout.NORTH);
+        mainPanel.add(tableScrollPane, BorderLayout.CENTER);
+
+        add(mainPanel);
         setVisible(true);
+
+        // Add action listeners for buttons
+        btnAdd.addActionListener(e -> addData());
+        btnUpdate.addActionListener(e -> updateData());
+        btnDelete.addActionListener(e -> deleteData());
+
         initComponents();
     }
 
+    // Add data to the table
+    private void addData() {
+        String loaiQuanTrang = txtLoaiQuanTrang.getText();
+        String maQuanTrang = txtMaQuanTrang.getText();
+
+        if (!loaiQuanTrang.isEmpty() && !maQuanTrang.isEmpty()) {
+            tableModel.addRow(new Object[]{loaiQuanTrang, maQuanTrang});
+            clearFields();
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // Update selected data in the table
+    private void updateData() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            String loaiQuanTrang = txtLoaiQuanTrang.getText();
+            String maQuanTrang = txtMaQuanTrang.getText();
+
+            if (!loaiQuanTrang.isEmpty() && !maQuanTrang.isEmpty()) {
+                tableModel.setValueAt(loaiQuanTrang, selectedRow, 0);
+                tableModel.setValueAt(maQuanTrang, selectedRow, 1);
+                clearFields();
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để sửa!", "Lỗi", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    // Delete selected data from the table
+    private void deleteData() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            tableModel.removeRow(selectedRow);
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng để xóa!", "Lỗi", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    // Clear text fields
+    private void clearFields() {
+        txtLoaiQuanTrang.setText("");
+        txtMaQuanTrang.setText("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
