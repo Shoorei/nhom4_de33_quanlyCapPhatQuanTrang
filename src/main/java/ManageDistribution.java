@@ -2,11 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+import com.itextpdf.text.pdf.PdfWriter;
 import dao.ConnectionProvider;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import javax.swing.table.TableModel;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  *
@@ -34,8 +37,10 @@ public class ManageDistribution extends javax.swing.JFrame {
         txtUniformDescription.setText("");
         txtDistributionQuantity.setText("");
     }
-    
-    public String 
+
+    public String getUniqueId(String prefix) {
+        return prefix + System.nanoTime();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,10 +54,10 @@ public class ManageDistribution extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtOfficerList = new javax.swing.JTable();
+        tableOfficer = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tableUniformList = new javax.swing.JTable();
+        tableUniform = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tableDistributionList = new javax.swing.JTable();
@@ -73,10 +78,13 @@ public class ManageDistribution extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         lblFinalTotalPrice = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnSaveDistributionDetails = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        txtUniformPrice = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -95,7 +103,7 @@ public class ManageDistribution extends javax.swing.JFrame {
         jLabel2.setText("Officer List");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 95, -1, -1));
 
-        txtOfficerList.setModel(new javax.swing.table.DefaultTableModel(
+        tableOfficer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -103,7 +111,12 @@ public class ManageDistribution extends javax.swing.JFrame {
                 "ID", "Name", "Rank", "Phone Number"
             }
         ));
-        jScrollPane1.setViewportView(txtOfficerList);
+        tableOfficer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableOfficerMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tableOfficer);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 129, 389, 221));
 
@@ -111,7 +124,7 @@ public class ManageDistribution extends javax.swing.JFrame {
         jLabel3.setText("Uniform List");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(637, 95, -1, -1));
 
-        tableUniformList.setModel(new javax.swing.table.DefaultTableModel(
+        tableUniform.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -119,7 +132,12 @@ public class ManageDistribution extends javax.swing.JFrame {
                 "ID", "Name", "Price", "Qty", "Description", "Cat ID", "Cat Name"
             }
         ));
-        jScrollPane2.setViewportView(tableUniformList);
+        tableUniform.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableUniformMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tableUniform);
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 129, -1, 221));
 
@@ -135,6 +153,11 @@ public class ManageDistribution extends javax.swing.JFrame {
                 "Uniform ID", "Name", "Quantity", "Pricce", "Description", "Sub Total"
             }
         ));
+        tableDistributionList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableDistributionListMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tableDistributionList);
 
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 129, 398, 221));
@@ -202,10 +225,15 @@ public class ManageDistribution extends javax.swing.JFrame {
                 txtDistributionQuantityActionPerformed(evt);
             }
         });
-        getContentPane().add(txtDistributionQuantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 619, 452, -1));
+        getContentPane().add(txtDistributionQuantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 619, 220, -1));
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("Add to Distribution List");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 686, 452, -1));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -216,14 +244,14 @@ public class ManageDistribution extends javax.swing.JFrame {
         lblFinalTotalPrice.setText("00000");
         getContentPane().add(lblFinalTotalPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(1208, 392, -1, -1));
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setText("Save Distribution Details");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnSaveDistributionDetails.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSaveDistributionDetails.setText("Save Distribution Details");
+        btnSaveDistributionDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnSaveDistributionDetailsActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 469, 398, -1));
+        getContentPane().add(btnSaveDistributionDetails, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 469, 398, -1));
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton3.setText("Reset");
@@ -242,16 +270,68 @@ public class ManageDistribution extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 619, 398, -1));
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
 
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Distribution_background.png"))); // NOI18N
-        jLabel15.setText("jLabel15");
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel14.setText("Uniform Price");
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 585, -1, -1));
+
+        txtUniformPrice.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtUniformPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUniformPriceActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtUniformPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 620, 210, -1));
+
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Distribution_background.png"))); // NOI18N
+        jLabel16.setText("jLabel16");
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
+        txtOfficerName.setEditable(false);
+        txtOfficerRank.setEditable(false);
+        txtOfficerPhoneNumber.setEditable(false);
+
+        txtUniformName.setEditable(false);
+        txtUniformDescription.setEditable(false);
+        txtDistributionQuantity.setEditable(true);
+
+        DefaultTableModel model = (DefaultTableModel) tableOfficer.getModel();
+        DefaultTableModel uniformModel = (DefaultTableModel) tableUniform.getModel();
+
+        try {
+            Connection con = ConnectionProvider.getCon();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select * from officer");
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString("officer_pk"),
+                    rs.getString("name"),
+                    rs.getString("officer_rank"),
+                    rs.getString("phoneNumber")
+                });
+            }
+            rs = st.executeQuery("select * from uniform inner join category on uniform.category_fk = category.category_pk");
+            while (rs.next()) {
+                uniformModel.addRow(new Object[]{
+                    rs.getString("uniform_pk"),
+                    rs.getString("name"),
+                    rs.getString("price"),
+                    rs.getString("quantity"),
+                    rs.getString("description"),
+                    rs.getString("category_fk"),
+                    rs.getString(8)
+                });
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
     }//GEN-LAST:event_formComponentShown
 
     private void txtUniformNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUniformNameActionPerformed
@@ -266,17 +346,166 @@ public class ManageDistribution extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUniformDescriptionActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnSaveDistributionDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveDistributionDetailsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        if (finalTotalPrice != 0 && !txtOfficerName.getText().equals("")) {
+            distributionId = getUniqueId("Detail-");
+
+            DefaultTableModel dtm = (DefaultTableModel) tableDistributionList.getModel();
+            if (tableDistributionList.getRowCount() != 0) {
+                for (int i = 0; i < tableDistributionList.getRowCount(); i++) {
+                    try {
+                        Connection con = ConnectionProvider.getCon();
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery("update uniform set quantity=quantity-" + Integer.parseInt(dtm.getValueAt(i, 2).toString()) + "where uniform_pk=" + Integer.parseInt(dtm.getValueAt(i, 0).toString()));
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, e);
+                    }
+                }
+            }
+
+            try {
+                SimpleDateFormat myFormat = new SimpleDateFormat("dd-MM-yyyy");
+                Calendar cal = Calendar.getInstance();
+                Connection con = ConnectionProvider.getCon();
+                PreparedStatement ps = con.prepareStatement("insert into distributionDetail(distributionId, officer_fk, distributionDate, totalPaid) values(?,?,?,?)");
+                ps.setString(1, distributionId);
+                ps.setInt(2, officerPk);
+                ps.setString(3, myFormat.format(cal.getTime()));
+                ps.setInt(4, finalTotalPrice);
+                ps.executeUpdate();
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            
+            //Creating document
+            com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
+            try{
+                PdfWriter.getInstance(doc, new FileOutputStream(file));
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }//GEN-LAST:event_btnSaveDistributionDetailsActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        setVisible(false);
+        new ManageDistribution().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        setVisible(false);
+//        new ManageDistribution().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txtUniformPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUniformPriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUniformPriceActionPerformed
+
+    private void tableOfficerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableOfficerMouseClicked
+        // TODO add your handling code here:
+        int index = tableOfficer.getSelectedRow();
+        TableModel model = tableOfficer.getModel();
+        String id = model.getValueAt(index, 0).toString();
+        officerPk = Integer.parseInt(id);
+
+        String name = model.getValueAt(index, 1).toString();
+        txtOfficerName.setText(name);
+
+        String officer_rank = model.getValueAt(index, 2).toString();
+        txtOfficerRank.setText(officer_rank);
+
+        String phoneNumber = model.getValueAt(index, 3).toString();
+        txtOfficerPhoneNumber.setText(phoneNumber);
+    }//GEN-LAST:event_tableOfficerMouseClicked
+
+    private void tableUniformMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableUniformMouseClicked
+        // TODO add your handling code here:
+        int index = tableUniform.getSelectedRow();
+        TableModel model = tableUniform.getModel();
+        String id = model.getValueAt(index, 0).toString();
+        uniformPk = Integer.parseInt(id);
+
+        String uniformName = model.getValueAt(index, 1).toString();
+        txtUniformName.setText(uniformName);
+
+        String uniformDescription = model.getValueAt(index, 4).toString();
+        txtUniformDescription.setText(uniformDescription);
+
+        String uniformPrice = model.getValueAt(index, 2).toString();
+        txtUniformPrice.setText(uniformPrice);
+    }//GEN-LAST:event_tableUniformMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String noOfUnits = txtDistributionQuantity.getText();
+        if (!noOfUnits.equals("")) {
+            String uniformName = txtUniformName.getText();
+            String uniformDescription = txtUniformDescription.getText();
+            String uniformPrice = txtUniformPrice.getText();
+
+            int totalPrice = Integer.parseInt(txtDistributionQuantity.getText()) * Integer.parseInt(uniformPrice);
+
+            int checkStock = 0;
+            int checkUniformAlreadyExistInCart = 0;
+
+            try {
+                Connection con = ConnectionProvider.getCon();
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery("SELECT * FROM uniform WHERE uniform_pk = " + uniformPk + "");
+
+                while (rs.next()) {
+                    if (rs.getInt("quantity") >= Integer.parseInt(noOfUnits)) {
+                        checkStock = 1;
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "Product is out of stock. Only " + rs.getInt("quantity") + " left.");
+                    }
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+
+            if (checkStock == 1) {
+                DefaultTableModel model = (DefaultTableModel) tableDistributionList.getModel();
+                if (tableDistributionList.getRowCount() != 0) {
+                    for (int i = 0; i < tableDistributionList.getRowCount(); i++) {
+                        if (Integer.parseInt(model.getValueAt(i, 0).toString()) == uniformPk) {
+                            checkUniformAlreadyExistInCart = 1;
+                            JOptionPane.showMessageDialog(null, "Uniform already exist in distribution list");
+                        }
+                    }
+                }
+
+                if (checkUniformAlreadyExistInCart == 0) {
+                    model.addRow(new Object[]{uniformPk, uniformName, noOfUnits, uniformPrice, uniformDescription, totalPrice});
+                    finalTotalPrice = finalTotalPrice + totalPrice;
+                    lblFinalTotalPrice.setText(String.valueOf(finalTotalPrice));
+                    JOptionPane.showMessageDialog(null, "Added Successfully!");
+                }
+                clearUniformFields();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Number of Quantity is needed!");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tableDistributionListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDistributionListMouseClicked
+        // TODO add your handling code here:
+        int index = tableDistributionList.getSelectedRow();
+        int a = JOptionPane.showConfirmDialog(null, "Do you want to remove this uniform?", "Select", JOptionPane.YES_NO_OPTION);
+        if (a == 0) {
+            TableModel model = tableDistributionList.getModel();
+            String subTotal = model.getValueAt(index, 5).toString();
+            finalTotalPrice = finalTotalPrice - Integer.parseInt(subTotal);
+            lblFinalTotalPrice.setText(String.valueOf(finalTotalPrice));
+            ((DefaultTableModel) tableDistributionList.getModel()).removeRow(index);
+        }
+    }//GEN-LAST:event_tableDistributionListMouseClicked
 
     /**
      * @param args the command line arguments
@@ -314,8 +543,8 @@ public class ManageDistribution extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSaveDistributionDetails;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
@@ -323,7 +552,9 @@ public class ManageDistribution extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -337,13 +568,14 @@ public class ManageDistribution extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblFinalTotalPrice;
     private javax.swing.JTable tableDistributionList;
-    private javax.swing.JTable tableUniformList;
+    private javax.swing.JTable tableOfficer;
+    private javax.swing.JTable tableUniform;
     private javax.swing.JTextField txtDistributionQuantity;
-    private javax.swing.JTable txtOfficerList;
     private javax.swing.JTextField txtOfficerName;
     private javax.swing.JTextField txtOfficerPhoneNumber;
     private javax.swing.JTextField txtOfficerRank;
     private javax.swing.JTextField txtUniformDescription;
     private javax.swing.JTextField txtUniformName;
+    private javax.swing.JTextField txtUniformPrice;
     // End of variables declaration//GEN-END:variables
 }
