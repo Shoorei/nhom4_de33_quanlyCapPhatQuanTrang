@@ -4,9 +4,12 @@
  */
 package group.panel;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-/**
- *
+import com.toedter.calendar.JCalendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+/*
  * @author LENOVO LEGION
  */
 public class QuanNhanPanel extends javax.swing.JFrame {
@@ -17,78 +20,111 @@ public class QuanNhanPanel extends javax.swing.JFrame {
     private JButton btnAdd;
     private JButton btnUpdate;
     private JButton btnDelete;
+    private JComboBox<String> rankDropdown;
+    private JCalendar calendar;
+    private JTable table;
+    private JTextField txtNgaySinh;
 
     /**
      * Creates new form QuanNhanPanel
      */
-    public QuanNhanPanel() {
+     public QuanNhanPanel() {
         setTitle("Quản Lý Quân Nhân");
-        setSize(600, 600);
+        setSize(1200, 800);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         // Khởi tạo các thành phần
-        txtHoTen = new JTextField(25);
-        txtMaSo = new JTextField(25);
-        txtDonVi = new JTextField(25);
-        txtCapBac = new JTextField(25);
+        txtHoTen = new JTextField(20);
+        txtMaSo = new JTextField(20);
+        txtDonVi = new JTextField(20);
+                
+        // Khởi tạo JCalendar và định dạng ngày sinh
+        calendar = new JCalendar();
+        calendar.setPreferredSize(new Dimension(300, 200)); // Điều chỉnh kích thước lịch
+        calendar.setWeekOfYearVisible(false); // Ẩn số tuần nếu không cần
+        txtNgaySinh = new JTextField(20);
+        txtNgaySinh.setEditable(false); // Chỉ đọc
+
+        // Lắng nghe sự kiện thay đổi ngày để hiển thị theo định dạng dd/MM/yyyy
+        calendar.addPropertyChangeListener("calendar", evt -> {
+            Date selectedDate = calendar.getDate();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String formattedDate = dateFormat.format(selectedDate);
+            txtNgaySinh.setText(formattedDate);
+        });
+        
+        
+        rankDropdown = new JComboBox<>(new String[] {
+                "Binh Nhì", "Binh Nhất", "Hạ Sĩ", "Trung Sĩ", "Thượng Sĩ", "Thiếu Úy", "Trung Úy", "Đại Úy"
+        });
+
+        // Khởi tạo bảng
+        table = new JTable(new DefaultTableModel(new Object[] {
+                "Họ Tên", "Mã Số", "Đơn Vị", "Cấp Bậc", "Ngày Sinh"
+        }, 0));
+        JScrollPane tableScrollPane = new JScrollPane(table);
+        tableScrollPane.setPreferredSize(new Dimension(800, 200)); // Điều chỉnh kích thước bảng
+
+        // Khởi tạo các nút
         btnAdd = new JButton("Thêm");
         btnUpdate = new JButton("Sửa");
         btnDelete = new JButton("Xóa");
 
-        // Sử dụng GridBagLayout để tăng tính linh hoạt
-        JPanel panel = new JPanel(new GridBagLayout());
+        // Bố trí các thành phần bằng GridBagLayout
+        JPanel formPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Thêm các thành phần vào panel với GridBagConstraints
         gbc.gridx = 0;
         gbc.gridy = 0;
-        panel.add(new JLabel("Họ Tên:"), gbc);
-
+        formPanel.add(new JLabel("Họ Tên:"), gbc);
         gbc.gridx = 1;
-        gbc.gridy = 0;
-        panel.add(txtHoTen, gbc);
+        formPanel.add(txtHoTen, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        panel.add(new JLabel("Mã Số:"), gbc);
-
+        formPanel.add(new JLabel("Mã Số:"), gbc);
         gbc.gridx = 1;
-        gbc.gridy = 1;
-        panel.add(txtMaSo, gbc);
+        formPanel.add(txtMaSo, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        panel.add(new JLabel("Đơn Vị:"), gbc);
-
+        formPanel.add(new JLabel("Đơn Vị:"), gbc);
         gbc.gridx = 1;
-        gbc.gridy = 2;
-        panel.add(txtDonVi, gbc);
+        formPanel.add(txtDonVi, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        formPanel.add(new JLabel("Cấp Bậc:"), gbc);
+        gbc.gridx = 1;
+        formPanel.add(rankDropdown, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
-        panel.add(new JLabel("Cấp Bậc:"), gbc);
-
+        formPanel.add(new JLabel("Ngày Sinh:"), gbc);
         gbc.gridx = 1;
-        gbc.gridy = 3;
-        panel.add(txtCapBac, gbc);
+        formPanel.add(calendar, gbc);
 
-        // Thêm nút hành động
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        gbc.gridx = 2;
+        gbc.gridy = 3;
+        formPanel.add(txtNgaySinh, gbc);
+
+        // Panel chứa các nút
+        JPanel buttonPanel = new JPanel();
         buttonPanel.add(btnAdd);
         buttonPanel.add(btnUpdate);
         buttonPanel.add(btnDelete);
 
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.gridwidth = 2;
-        panel.add(buttonPanel, gbc);
+        // Panel chính để chứa tất cả thành phần
+        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
+        mainPanel.add(formPanel, BorderLayout.NORTH);
+        mainPanel.add(tableScrollPane, BorderLayout.CENTER);
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        add(panel, BorderLayout.CENTER);
+        add(mainPanel);
         setVisible(true);
-        initComponents();
     }
 
     /**
