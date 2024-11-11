@@ -1,3 +1,5 @@
+package com.quanly.quantrang;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -294,7 +296,6 @@ public class ManageDistribution extends javax.swing.JFrame {
         getContentPane().add(txtUniformPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 620, 210, -1));
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Distribution_background.png"))); // NOI18N
-        jLabel16.setText("jLabel16");
         getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
 
         pack();

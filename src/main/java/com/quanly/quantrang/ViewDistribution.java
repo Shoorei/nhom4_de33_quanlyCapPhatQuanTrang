@@ -1,3 +1,5 @@
+package com.quanly.quantrang;
+
 
 import common.OpenPdf;
 import dao.ConnectionProvider;

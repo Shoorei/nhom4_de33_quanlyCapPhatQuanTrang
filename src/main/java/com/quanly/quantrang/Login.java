@@ -1,4 +1,7 @@
+package com.quanly.quantrang;
 
+
+import com.quanly.quantrang.Home;
 import dao.ConnectionProvider;
 import java.sql.Connection;
 import java.sql.ResultSet;

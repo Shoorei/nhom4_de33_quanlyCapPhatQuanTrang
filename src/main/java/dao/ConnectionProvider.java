@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -23,8 +24,14 @@ public class ConnectionProvider {
 
             // Đọc thông tin từ config.properties
             Properties props = new Properties();
-            FileInputStream fis = new FileInputStream("src/main/resources/config.properties");
-            props.load(fis);
+            
+            try (InputStream input = ConnectionProvider.class.getClassLoader().getResourceAsStream("config.properties")) {
+                if (input == null) {
+                    System.out.println("Sorry, unable to find config.properties");
+                    return null;
+                }
+                props.load(input);
+            }
 
             String url = props.getProperty("db.url");
             String user = props.getProperty("db.username");
