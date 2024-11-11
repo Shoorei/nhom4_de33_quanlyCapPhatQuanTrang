@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package group.nhom4_de33_quanlycapphatquantrang;
+package group.entity;
 
 /**
  *
@@ -47,6 +47,10 @@ public class DonVi {
         this.soLuongQuanNhan = this.danhSachQuanNhan.size();
     }
 
+    public void setSoLuongQuanNhan(int soLuongQuanNhan) {
+    this.soLuongQuanNhan = soLuongQuanNhan;
+}
+    
     @Override
     public String toString() {
         return tenDonVi + " (Ma so: " + maSo + ") - So luong quan nhan: " + soLuongQuanNhan;
