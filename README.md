@@ -15,14 +15,25 @@ Dự án "Quản lý cấp phát quân trang tại doanh trại" là một ứng
 - **IDE**: Apache NetBeans 23
 - **Phiên bản JDK**: 23
 
+## Cấu hình CSDL
+- Tạo cơ sở dữ liệu MySQL có tên military_uniforms.
+- Cập nhật thông tin cấu hình trong file src/main/resources/config.properties với thông tin user và password của bạn:
+
+```
+db.url=jdbc:mysql://localhost:3306/military_uniforms?useSSL=false
+db.username=your_mysql_username   # Thay bằng username của bạn
+db.password=your_mysql_password   # Thay bằng password của bạn
+```
+
 ## Cấu trúc dự án
 - `src/main/java`: Chứa mã nguồn chính của ứng dụng.
 - `src/main/resources`: Chứa các tài nguyên như `config.properties` và file SQL `database_backup.sql`.
 - `pom.xml`: File cấu hình của Maven, quản lý các thư viện phụ thuộc và plugin.
 
 ## Yêu cầu hệ thống
-- **JDK**: Phiên bản 23 trở lên
+- **JDK**: Phiên bản 23
 - **MySQL**: Để lưu trữ cơ sở dữ liệu
 - **Maven**: Để quản lý dependencies
+
 
 
